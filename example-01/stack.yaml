@@ -1,0 +1,10 @@
+api: v1
+
+vars:
+  Hello: World!
+
+run:
+- gomplate: |-
+    {{ . | toYAML }}
+  output:
+  - stderr
