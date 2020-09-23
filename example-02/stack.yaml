@@ -1,0 +1,8 @@
+api: v1
+
+stacks:
+- example-01
+
+libs:
+- git: git@github.com:kruglovmax/stack-examples.git
+  ref: master
