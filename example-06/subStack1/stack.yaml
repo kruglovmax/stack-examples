@@ -1,0 +1,10 @@
+api: v1
+
+run:
+- gomplate: "Hello from subStack1"
+  output:
+  - stderr
+- script: sleep 3
+
+waitGroups:
+- subStack1

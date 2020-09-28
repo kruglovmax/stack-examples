@@ -1,0 +1,9 @@
+api: v1
+
+run:
+- gitclone: git@gitlab.allabout.me:infra/pipeline-templates.git
+  dir: .tmp
+- jsonnet:
+  - .tmp/golang.jsonnet
+  output:
+  - stderr

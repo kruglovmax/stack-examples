@@ -5,6 +5,8 @@ vars:
 
 run:
 - gomplate: |-
+    # ----------------
+    # STACK {{ .name }}
     {{ . | toYAML }}
   output:
   - stderr

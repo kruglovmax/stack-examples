@@ -1,0 +1,35 @@
+api: v1
+
+locals:
+  terraform_output: |-
+    bootstrap_brokers = aws_msk_cluster.msk.bootstrap_brokers
+    bootstrap_brokers_tls = b-2.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:9094,b-1.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:9094,b-3.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:9094
+    zookeeper_connect_string = z-3.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:2181,z-2.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:2181,z-1.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:2181
+
+run:
+- gomplate: |-
+    {{- $zookeeper_connect_string := "" }}
+    {{- $bootstrap_brokers_tls := "" }}
+    {{- $bootstrap_brokers := "" }}
+    {{- $splitedStr := (.locals.terraform_output | strings.Split "\n") }}
+    {{- range $str := $splitedStr }}
+      {{- if $str | strings.Contains "zookeeper_connect_string" }}
+        {{- $zookeeper_connect_string = ( index ($str | strings.SplitN "=" 2) 1 | strings.TrimSpace ) }}
+      {{- end }}
+      {{- if $str | strings.Contains "bootstrap_brokers_tls =" }}
+        {{- $bootstrap_brokers_tls = ( index ($str | strings.SplitN "=" 2) 1 | strings.TrimSpace ) }}
+      {{- end }}
+      {{- if $str | strings.Contains "bootstrap_brokers =" }}
+        {{- $bootstrap_brokers = ( index ($str | strings.SplitN "=" 2) 1 | strings.TrimSpace ) }}
+      {{- end }}
+    {{- end }}
+    zookeeper_connect_string: {{ $zookeeper_connect_string | quote }}
+    bootstrap_brokers_tls: {{ $bootstrap_brokers_tls | quote }}
+    bootstrap_brokers: {{ $bootstrap_brokers | quote }}
+  output:
+  - yml2var: vars.kafka_config
+
+- gomplate: |-
+    {{ . | toYAML }}
+  output:
+  - stderr

@@ -1,0 +1,13 @@
+api: v1
+
+vars:
+  test: test
+  var: var
+
+run:
+- gomplate: |-
+    {{ . | toYAML }}
+  output:
+  - stderr
+
+when: vars.test + vars.var + "_" + id == "testvar_stack_1"

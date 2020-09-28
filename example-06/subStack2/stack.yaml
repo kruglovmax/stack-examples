@@ -1,0 +1,8 @@
+api: v1
+
+run:
+- gomplate: "Hello from subStack2"
+  output:
+  - stderr
+
+wait: waitGroup("subStack1")

@@ -1,5 +1,22 @@
 api: v1
 
+run:
+- gomplate: |-
+    # ----------------
+    # STACK {{ .name }}
+    # STAGE {{ index .status .id }}
+    {{ . | toYAML }}
+  output:
+  - stderr
+
+postRun:
+- gomplate: |-
+    # ----------------
+    # STACK {{ .name }}
+    {{ . | toYAML }}
+  output:
+  - stderr
+
 stacks:
 - example-01
 
