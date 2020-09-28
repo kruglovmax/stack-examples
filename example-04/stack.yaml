@@ -5,6 +5,25 @@ locals:
     bootstrap_brokers = aws_msk_cluster.msk.bootstrap_brokers
     bootstrap_brokers_tls = b-2.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:9094,b-1.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:9094,b-3.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:9094
     zookeeper_connect_string = z-3.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:2181,z-2.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:2181,z-1.loadtest-eu-west-1.40lpa1.c4.kafka.eu-west-1.amazonaws.com:2181
+  terraform_output_json: |-
+    {
+      "bootstrap_brokers": {
+        "sensitive": false,
+        "type": "string",
+        "value": "aws_msk_cluster.msk.bootstrap_brokers"
+      },
+      "bootstrap_brokers_tls": {
+        "sensitive": false,
+        "type": "string",
+        "value": "b-1.loadtest-eu-west-1.8rwa6y.c4.kafka.eu-west-1.amazonaws.com:9094,b-3.loadtest-eu-west-1.8rwa6y.c4.kafka.eu-west-1.amazonaws.com:9094,b-2.loadtest-eu-west-1.8rwa6y.c4.kafka.eu-west-1.amazonaws.com:9094"
+      },
+      "zookeeper_connect_string": {
+        "sensitive": false,
+        "type": "string",
+        "value": "z-2.loadtest-eu-west-1.8rwa6y.c4.kafka.eu-west-1.amazonaws.com:2181,z-1.loadtest-eu-west-1.8rwa6y.c4.kafka.eu-west-1.amazonaws.com:2181,z-3.loadtest-eu-west-1.8rwa6y.c4.kafka.eu-west-1.amazonaws.com:2181"
+      }
+    }
+
 
 run:
 - gomplate: |-
@@ -30,6 +49,11 @@ run:
   - yml2var: vars.kafka_config
 
 - gomplate: |-
-    {{ . | toYAML }}
+    {{ .locals.terraform_output_json }}
+  output:
+  - yml2var: vars.test
+
+- gomplate: |-
+    {{ .vars | toYAML }}
   output:
   - stderr
