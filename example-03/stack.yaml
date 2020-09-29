@@ -6,4 +6,8 @@ run:
 - jsonnet:
   - .tmp/golang.jsonnet
   output:
+  - yml2var: locals.golang_pipeline
+- gomplate: |-
+    {{ .locals.golang_pipeline | toYAML }}
+  output:
   - stderr
