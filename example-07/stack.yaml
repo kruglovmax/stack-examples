@@ -1,0 +1,14 @@
+api: v1
+
+run:
+- gomplate: |-
+    {{- defineDatasource "s3example" ( printf "s3://infra-click-terraform-state/msk/dev" ) }}
+    {{- $test := ds "s3example" -}}
+    {{ $test.outputs | toYAML }}
+  output:
+  - yml2var: locals.kafka
+
+- gomplate: |-
+    {{ .locals | toYAML }}
+  output:
+  - stderr
