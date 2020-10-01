@@ -1,0 +1,8 @@
+api: v1
+
+locals:
+  testOverride: varFromParent
+  varFrom: parent
+
+stacks:
+- testFunc: locals
