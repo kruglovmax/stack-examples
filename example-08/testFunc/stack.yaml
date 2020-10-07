@@ -1,8 +1,7 @@
 api: v1
 
 locals:
-  noOverride: var
-  testOverride: localVar
+  test: localVar
 
 run:
 - gomplate: |-

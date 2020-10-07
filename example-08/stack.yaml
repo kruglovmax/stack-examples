@@ -1,8 +1,8 @@
 api: v1
 
 locals:
-  testOverride: varFromParent
+  testInput: varFromParent
   varFrom: parent
 
 stacks:
-- testFunc: locals
+- testFunc: locals.testInput
