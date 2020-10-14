@@ -1,0 +1,8 @@
+api: v1
+
+run:
+- script: |-
+    echo "--- stack3 ---"
+    ping mail.ru -c 4
+  output:
+  - stderr

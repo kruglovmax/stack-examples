@@ -1,0 +1,12 @@
+api: v1
+
+run:
+- gomplate: |
+
+    --- {{ .name | toUpper }} STACKS ---
+  output:
+  - stderr
+
+pstacks:
+- _libs:
+  - .*

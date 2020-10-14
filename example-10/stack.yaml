@@ -1,0 +1,13 @@
+api: v1
+
+vars:
+  test~:
+    sdf: sf
+
+run:
+- gomplate: |-
+    {{- $envs := slice -}}
+    {{- $envs = append "test" $envs -}}
+    {{- file.Write ".tmp/test.yaml" ( $envs | toYAML ) -}}
+  output:
+  - stderr

@@ -5,6 +5,6 @@ locals:
 
 run:
 - gomplate: |-
-    {{ . | toYAML }}
+    {{ .input | toYAML }}
   output:
   - stderr

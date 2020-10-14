@@ -2,13 +2,8 @@ api: v1
 
 run:
 - gomplate: |-
-    {{- defineDatasource "s3example" ( printf "s3://infra-click-terraform-state/msk/dev" ) }}
+    {{- defineDatasource "s3example" ( printf "s3://infra-click-terraform-state/eks-ops-us-east-1-infra-click" ) }}
     {{- $test := ds "s3example" -}}
-    {{ $test.outputs | toYAML }}
-  output:
-  - yml2var: locals.kafka
-
-- gomplate: |-
-    {{ .locals | toYAML }}
+    {{ index ($test.outputs.cluster_arn.value | strings.Split ":") 4 }}
   output:
   - stderr
